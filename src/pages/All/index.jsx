@@ -5,7 +5,6 @@ const All = () => {
   const storageJobs = JSON.parse(localStorage.getItem("jobs"));
   const [job, setJob] = useState("");
   const [jobs, setJobs] = useState(storageJobs ?? []);
-  const [check, setCheck] = useState(false);
 
   const handleSubmit = () => {
     setJobs((prev) => {
@@ -17,10 +16,35 @@ const All = () => {
     setJob("");
   };
 
-  const handleChecked = () => {
-    setCheck((prev) => !prev);
-    console.log(setCheck);
+  const handleCheck = (job) => {
+    // Get Goins list
+    let doingTasks = JSON.parse(localStorage.getItem("goins"));
+
+    // Initial value for doingTask if doingTask == null
+    if (!doingTasks) {
+      doingTasks = [];
+    }
+
+    // Add new items from job --> doing task
+    doingTasks.push(job);
+    console.log("doingTasks", doingTasks);
+    const jsonJobs = JSON.stringify(doingTasks);
+    localStorage.setItem("goins", jsonJobs);
+
+    // Minus 1 Jobs
+    setJobs(() => {
+      const newJobs = jobs.filter(function (content) {
+        return content !== job;
+      });
+
+      console.log("newJobs", newJobs);
+
+      const jsonJobs = JSON.stringify(newJobs);
+      localStorage.setItem("jobs", jsonJobs);
+      return newJobs;
+    });
   };
+
   return (
     <div
       style={{
@@ -48,10 +72,9 @@ const All = () => {
         {jobs.map((job, index) => (
           <li key={index} style={{ margin: "20px 20px" }}>
             <input
-              value={check}
-              onChange={handleChecked}
               type="checkbox"
               style={{ margin: "0 20px" }}
+              onChange={() => handleCheck(job)}
             />
             {job}
           </li>
