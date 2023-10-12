@@ -1,5 +1,4 @@
 import { Button, Input } from "antd";
-import React from "react";
 import { useState } from "react";
 
 const Active = () => {

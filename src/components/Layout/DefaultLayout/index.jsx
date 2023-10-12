@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../DefaultLayout/Header";
 
 const DefaultLayout = ({ children }) => {

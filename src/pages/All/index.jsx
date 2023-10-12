@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Input, Button } from "antd";
 
@@ -6,15 +5,21 @@ const All = () => {
   const storageJobs = JSON.parse(localStorage.getItem("jobs"));
   const [job, setJob] = useState("");
   const [jobs, setJobs] = useState(storageJobs ?? []);
+  const [check, setCheck] = useState(false);
+
   const handleSubmit = () => {
     setJobs((prev) => {
       const newJobs = [...prev, job];
-
       const jsonJobs = JSON.stringify(newJobs);
       localStorage.setItem("jobs", jsonJobs);
       return newJobs;
     });
     setJob("");
+  };
+
+  const handleChecked = () => {
+    setCheck((prev) => !prev);
+    console.log(setCheck);
   };
   return (
     <div
@@ -42,7 +47,12 @@ const All = () => {
       <ul>
         {jobs.map((job, index) => (
           <li key={index} style={{ margin: "20px 20px" }}>
-            <input type="checkbox" style={{ margin: "0 20px" }} />
+            <input
+              value={check}
+              onChange={handleChecked}
+              type="checkbox"
+              style={{ margin: "0 20px" }}
+            />
             {job}
           </li>
         ))}

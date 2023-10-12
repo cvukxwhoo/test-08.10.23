@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
